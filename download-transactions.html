@@ -1,0 +1,60 @@
+<mat-dialog-content class="trsn-info-modal">    
+
+    <img src="assets/images/icons/x-plain.svg" class="fr pointer close-img" (click)="close()">
+    <div class="pa4 mr2 ml2">
+        <h3 class="f2 fw3 rb-semi-black">Download Transactions {{data.message}}</h3>
+        <p class="f5 b rb-semi-black mb2 ">Last Transaction Download Period for Checking - X2263: 04/01/2019 - 04/30/2019</p>
+        <mat-tab-group class="calendar-header download-info">
+            <mat-tab label="By Month">
+                <mat-form-field class="rb-db">
+                    <mat-select placeholder="Month" [formControl]="month" #monthAndYear>
+                        <mat-option value={{data}} *ngFor="let data of months">{{data}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="noShowMonth && !monthAndYear.value">Please Enter the Month</mat-error>
+                <mat-form-field class="rb-db mt2" >
+                    <mat-select placeholder="Select Fianancial Software" #financialYear>
+                        <mat-option value="OFX">MS Money 2005 and higher</mat-option>
+                        <mat-option value="QFX">Quicken 2009 and higher</mat-option>
+                        <mat-option value="QBO">QuickenBooks 2005 and higher</mat-option>
+                        <mat-option value="CSV">CSV</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="noShowFinancial && !financialYear.value">Please Enter the Fianancial Software</mat-error>
+            </mat-tab>
+
+            <mat-tab label="By Date Range">
+                <mat-form-field class="mr3">
+                    <input matInput [matDatepicker]="startdate" [min]="minimumDate" placeholder="Start Date" #startDate>
+                    <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
+                    <mat-datepicker #startdate ></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="ml3">
+                    <input matInput [matDatepicker]="enddate"[min]="minimumDate"  placeholder="End Date" #endDate>
+                    <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
+                    <mat-datepicker #enddate></mat-datepicker>
+                </mat-form-field> 
+                <mat-error *ngIf="(noShowStartEnd && !startDate.value) || (noShowStartEnd && !endDate.value)">Please Enter the Start and End Date</mat-error>
+
+                <mat-form-field class="rb-db mt2">
+                    <mat-select placeholder="Select Fianancial Software" #financialYear>
+                            <mat-option value="OFX">MS Money 2005 and higher</mat-option>
+                            <mat-option value="QFX">Quicken 2009 and higher</mat-option>
+                            <mat-option value="QBO">QuickenBooks 2005 and higher</mat-option>
+                            <mat-option value="CSV">CSV</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="noShowFinancial && !financialYear.value">Please Enter the Fianancial Software</mat-error>
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+<div class="modal-buttons"> 
+     <mat-dialog-actions class="mt3 buttons-bottom" align="center">
+        <button mat-dialog-close class="rb-btn-blue bn pl0 w-40 f5 no-border pointer close-modal rb-bg-white">Close</button>
+        <button mat-button class="rb-bg-btn-blue bn w-40 rb-white f5 no-border pointer btn-modal" 
+        (click)="downloadTransaction(monthAndYear.value, financialYear.value, startDate.value,endDate.value,financialYear.value)">Download</button>
+    </mat-dialog-actions> 
+</div>
+  
+</mat-dialog-content>
